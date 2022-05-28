@@ -46,7 +46,8 @@ namespace AuthenticationWebApi.Services.AuthService
                 return new AuthResponseDto { Message = "Wrong Password" };
             }
             string token = CreateToken(user);
-            return new AuthResponseDto { Success = true, Token = token };
+            var refreshToken = CreateRefreshToken();
+            return new AuthResponseDto { Success = true, Token = token, RefreshToken = refreshToken.Token, TokenExpires = refreshToken.Expires };
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash,out byte[] passwordSalt)
@@ -86,6 +87,18 @@ namespace AuthenticationWebApi.Services.AuthService
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
+        }
+
+        private RefreshToken CreateRefreshToken()
+        {
+           var refreshToken = new RefreshToken
+           {
+               Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+               Expires = DateTime.Now.AddDays(7),
+               Created = DateTime.Now,
+           };
+
+            return refreshToken;
         }
     }
 }
