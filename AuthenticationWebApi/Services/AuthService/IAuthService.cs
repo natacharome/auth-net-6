@@ -4,5 +4,6 @@
     {
         Task<User> CreateUser(UserDto request);
         Task<AuthResponseDto> Login(UserDto request);
+        Task<AuthResponseDto> RefreshToken();
     }
 }
