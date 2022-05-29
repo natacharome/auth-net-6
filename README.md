@@ -12,7 +12,7 @@ POST /api/Auth
 
 POST /api/Auth/login
 
-POST /api/Auth/refreshh-token
+POST /api/Auth/refresh-token
 
 GET /api/Auth/australia-cities (use to make sure role works)
 
