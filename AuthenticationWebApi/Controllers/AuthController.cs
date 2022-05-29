@@ -43,10 +43,16 @@ namespace AuthenticationWebApi.Controllers
             return BadRequest(response.Message);
         }
 
-        [HttpGet, Authorize]
-        public async Task<ActionResult<string>> Aloha()
+        [HttpGet("australia-cities"), Authorize(Roles = "User,Admin")]
+        public async Task<ActionResult<string>> GetListOfAustraliaCities()
         {
-            return "ALoha";
+            var australiaCities = new List<string>
+            {
+                "Perth",
+                "Melbourne",
+                "Byron Bay"
+            };
+            return Ok(australiaCities);
         }
     }
 }
